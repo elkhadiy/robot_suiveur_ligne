@@ -1,0 +1,22 @@
+-- mdl2lus - 2014 ver. 0.41 (SHA 79444ea)
+-- Wed Nov 18 16:26:22 2015
+node edge_01(in: bool) returns (out: bool);
+var
+   w_000: bool;
+   w_001: bool;
+let
+   w_000 = edge(w_001);
+   out = w_000;
+   w_001 = in;
+tel
+node edge(In1: bool) returns (Out1: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+let
+   w_001 = (w_002 and w_000);
+   Out1 = w_001;
+   w_000 = (false -> (pre w_001));
+   w_002 = In1;
+tel

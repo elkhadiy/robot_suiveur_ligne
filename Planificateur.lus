@@ -1,0 +1,133 @@
+-- mdl2lus - 2014 ver. 0.41 (SHA 79444ea)
+-- Tue Dec  1 15:29:32 2015
+node Planificateur(Obstacle: real; Cg: real; soeuil_obstacle: real; soeuil_noir: real; soeuil_blanc: real) returns (etat: bool);
+var
+   w_000: real;
+   w_001: real;
+   w_002: real;
+   w_003: real;
+   w_004: bool;
+   w_005: bool;
+   w_006: bool;
+   w_007: bool;
+   w_008: bool;
+   w_009: bool;
+   w_010: real;
+   w_011: bool;
+let
+   w_010 = Cg;
+   w_000 = soeuil_blanc;
+   w_001 = soeuil_noir;
+   w_003 = soeuil_obstacle;
+   w_009 = (not w_005);
+   w_007 = detect_front_montant1(w_005);
+   w_006 = Register(w_008, w_007);
+   w_002 = Obstacle;
+   w_011 = detect_front_montant(w_008);
+   etat = w_004;
+   w_008 = (w_002 >= w_003);
+   w_004 = (w_009 and w_006);
+   w_005 = detecteur_s__quence_blanc_noir_blanc(w_010, w_011, w_001, w_000);
+tel
+node detecteur_s__quence_blanc_noir_blanc(Cg: real; reset: bool; soeuil_noir: real; soeuil_blanc: real) returns (s__quence_rep__r__e: bool);
+var
+   w_000: real;
+   w_001: real;
+   w_002: bool;
+   w_003: real;
+   w_004: bool;
+   w_005: bool;
+   w_006: bool;
+   w_007: bool;
+   w_008: bool;
+   w_009: bool;
+let
+   w_003 = Cg;
+   w_000 = soeuil_blanc;
+   w_008 = reset;
+   w_005 = (w_003 >= w_000);
+   w_001 = soeuil_noir;
+   w_002 = Register1(w_005, w_004);
+   w_004 = (w_009 or w_008);
+   w_007 = Register_01(w_006, w_008);
+   w_009 = (not w_007);
+   w_006 = (w_003 <= w_001);
+   s__quence_rep__r__e = w_002;
+tel
+node detect_front_montant(In1: bool) returns (Out1: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+let
+   w_002 = (not w_001);
+   Out1 = w_000;
+   w_000 = (w_002 and w_003);
+   w_001 = (false -> (pre w_003));
+   w_003 = In1;
+tel
+node Register(S: bool; R: bool) returns (Q: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: bool;
+let
+   Q = w_005;
+   w_003 = (not w_000);
+   w_001 = S;
+   w_005 = (w_002 and w_003);
+   w_002 = (w_004 or w_001);
+   w_000 = R;
+   w_004 = (false -> (pre w_005));
+tel
+node detect_front_montant1(In1: bool) returns (Out1: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+let
+   w_002 = (not w_001);
+   Out1 = w_000;
+   w_000 = (w_002 and w_003);
+   w_001 = (false -> (pre w_003));
+   w_003 = In1;
+tel
+node Register_01(S: bool; R: bool) returns (Q: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: bool;
+let
+   Q = w_005;
+   w_003 = (not w_000);
+   w_001 = S;
+   w_005 = (w_002 and w_003);
+   w_002 = (w_004 or w_001);
+   w_000 = R;
+   w_004 = (false -> (pre w_005));
+tel
+node Register1(S: bool; R: bool) returns (Q: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: bool;
+let
+   Q = w_005;
+   w_003 = (not w_000);
+   w_001 = S;
+   w_005 = (w_002 and w_003);
+   w_002 = (w_004 or w_001);
+   w_000 = R;
+   w_004 = (false -> (pre w_005));
+tel

@@ -1,0 +1,237 @@
+-- mdl2lus - 2014 ver. 0.41 (SHA 79444ea)
+-- Tue Dec  1 14:56:48 2015
+const kp_teta : real;
+const pi : real;
+const ki_teta : real;
+node Controller(Cg: real; Cd: real; obstacle: real; vitesse_rotation: real; soeuil_obstacle: real; soeuil_noir: real; soeuil_blanc: real) returns (u_d: real; u_g: real);
+var
+   w_000: real;
+   w_001: real;
+   w_002: real;
+   w_003: real;
+   w_004: real;
+   w_005: bool;
+   w_006: real;
+   w_007: real;
+   w_008: real;
+   w_009: real;
+   w_010: real;
+   w_011: real;
+   w_012: real;
+   w_013: real;
+   w_014: real;
+   w_015: real;
+let
+   u_d = w_012;
+   w_006 = Cg;
+   w_005 = Controlleur_d___tat(w_004, w_006, w_002, w_001, w_000);
+   w_000 = soeuil_blanc;
+   w_001 = soeuil_noir;
+   w_002 = soeuil_obstacle;
+   (w_008, w_007) = rotate(w_003);
+   w_011 = (if w_005 then w_007 else w_009);
+   w_014 = Cd;
+   (w_013, w_015) = Calcul_ecart(w_006, w_014);
+   w_012 = (if w_005 then w_008 else w_010);
+   u_g = w_011;
+   w_004 = obstacle;
+   (w_010, w_009) = regulateur(w_013, w_015);
+   w_003 = vitesse_rotation;
+tel
+node regulateur(eps_theta: real; eps_d: real) returns (u_d: real; u_g: real);
+var
+   w_000: real;
+   w_001: real;
+   w_002: real;
+   w_003: real;
+   w_004: real;
+   w_005: real;
+   w_006: real;
+   w_007: real;
+   w_008: real;
+   w_009: real;
+   w_010: real;
+   w_011: real;
+   w_012: real;
+   w_013: real;
+   w_014: real;
+   w_015: real;
+   w_016: real;
+let
+   w_000 = eps_d;
+   u_d = w_002;
+   w_002 = ((1.0 / 2.0) * w_014);
+   w_001 = ((1.0 / 2.0) * w_013);
+   w_007 = ((- w_009) + w_011);
+   w_014 = (w_006 + w_008);
+   w_006 = (w_016 + w_015);
+   w_005 = (0.002 * w_010);
+   w_010 = eps_theta;
+   w_015 = (kp_teta * w_010);
+   w_012 = (2.0 * w_006);
+   w_011 = (0.005 * w_000);
+   w_016 = (ki_teta * w_004);
+   u_g = w_001;
+   w_003 = (0.0 -> (pre w_004));
+   w_009 = (if w_012<0.0 then -w_012 else w_012);
+   w_008 = (2.0 * w_007);
+   w_004 = (w_005 + w_003);
+   w_013 = ((- w_006) + w_008);
+tel
+node Calcul_ecart(Cg: real; Cd: real) returns (eps_theta: real; eps_d: real);
+var
+   w_000: real;
+   w_001: real;
+   w_002: real;
+   w_003: real;
+   w_004: real;
+let
+   w_004 = (w_003 - w_002);
+   eps_d = w_000;
+   w_002 = Cg;
+   w_000 = (w_003 + w_002);
+   eps_theta = w_001;
+   w_003 = Cd;
+   w_001 = ((pi / 200.0) * w_004);
+tel
+node rotate(vitesse_rotation: real) returns (u_d: real; u_g: real);
+var
+   w_000: real;
+   w_001: real;
+let
+   u_d = w_000;
+   w_001 = ((- 1.0) * w_000);
+   u_g = w_001;
+   w_000 = vitesse_rotation;
+tel
+node Controlleur_d___tat(Obstacle: real; Cg: real; soeuil_obstacle: real; soeuil_noir: real; soeuil_blanc: real) returns (etat: bool);
+var
+   w_000: real;
+   w_001: real;
+   w_002: real;
+   w_003: real;
+   w_004: bool;
+   w_005: bool;
+   w_006: bool;
+   w_007: bool;
+   w_008: bool;
+   w_009: bool;
+   w_010: real;
+   w_011: bool;
+let
+   w_010 = Cg;
+   w_000 = soeuil_blanc;
+   w_001 = soeuil_noir;
+   w_003 = soeuil_obstacle;
+   w_009 = (not w_005);
+   w_007 = detect_front_montant1(w_005);
+   w_006 = Register_01(w_008, w_007);
+   w_002 = Obstacle;
+   w_011 = detect_front_montant(w_008);
+   etat = w_004;
+   w_008 = (w_002 >= w_003);
+   w_004 = (w_009 and w_006);
+   w_005 = detecteur_s__quence_blanc_noir_blanc(w_010, w_011, w_001, w_000);
+tel
+node detecteur_s__quence_blanc_noir_blanc(Cg: real; reset: bool; soeuil_noir: real; soeuil_blanc: real) returns (s__quence_rep__r__e: bool);
+var
+   w_000: real;
+   w_001: real;
+   w_002: bool;
+   w_003: real;
+   w_004: bool;
+   w_005: bool;
+   w_006: bool;
+   w_007: bool;
+   w_008: bool;
+   w_009: bool;
+let
+   w_003 = Cg;
+   w_000 = soeuil_blanc;
+   w_008 = reset;
+   w_005 = (w_003 >= w_000);
+   w_001 = soeuil_noir;
+   w_002 = Register1(w_005, w_004);
+   w_004 = (w_009 or w_008);
+   w_007 = Register(w_006, w_008);
+   w_009 = (not w_007);
+   w_006 = (w_003 <= w_001);
+   s__quence_rep__r__e = w_002;
+tel
+node detect_front_montant(In1: bool) returns (Out1: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+let
+   w_002 = (not w_001);
+   Out1 = w_000;
+   w_000 = (w_002 and w_003);
+   w_001 = (false -> (pre w_003));
+   w_003 = In1;
+tel
+node Register_01(S: bool; R: bool) returns (Q: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: bool;
+let
+   Q = w_005;
+   w_003 = (not w_000);
+   w_001 = S;
+   w_005 = (w_002 and w_003);
+   w_002 = (w_004 or w_001);
+   w_000 = R;
+   w_004 = (false -> (pre w_005));
+tel
+node detect_front_montant1(In1: bool) returns (Out1: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+let
+   w_002 = (not w_001);
+   Out1 = w_000;
+   w_000 = (w_002 and w_003);
+   w_001 = (false -> (pre w_003));
+   w_003 = In1;
+tel
+node Register(S: bool; R: bool) returns (Q: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: bool;
+let
+   Q = w_005;
+   w_003 = (not w_000);
+   w_001 = S;
+   w_005 = (w_002 and w_003);
+   w_002 = (w_004 or w_001);
+   w_000 = R;
+   w_004 = (false -> (pre w_005));
+tel
+node Register1(S: bool; R: bool) returns (Q: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: bool;
+let
+   Q = w_005;
+   w_003 = (not w_000);
+   w_001 = S;
+   w_005 = (w_002 and w_003);
+   w_002 = (w_004 or w_001);
+   w_000 = R;
+   w_004 = (false -> (pre w_005));
+tel

@@ -1,0 +1,83 @@
+-- mdl2lus - 2014 ver. 0.41 (SHA 79444ea)
+-- Tue Nov 24 13:42:21 2015
+const Nb : int = 100;
+node td3(Cg: int; reset: bool) returns (epsilon: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: bool;
+   w_006: bool;
+   w_007: bool;
+   w_008: int;
+let
+   w_008 = Cg;
+   w_007 = reset;
+   w_005 = noir(w_008, w_004);
+   w_004 = (w_002 or w_007);
+   w_000 = (not w_005);
+   w_001 = (w_007 or w_000);
+   w_003 = blanc0(w_008, w_007);
+   w_002 = (not w_003);
+   w_006 = blanc1(w_008, w_001);
+   epsilon = w_006;
+tel
+node blanc1(Cg: int; reset: bool) returns (epsilon: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: int;
+   w_006: bool;
+let
+   w_005 = Cg;
+   w_003 = reset;
+   w_006 = (w_005 >= Nb);
+   w_001 = (false -> (pre w_000));
+   w_004 = (w_006 or w_001);
+   epsilon = w_000;
+   w_000 = (if w_003 then w_002 else w_004);
+   w_002 = false;
+tel
+node blanc0(Cg: int; reset: bool) returns (epsilon: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: int;
+   w_006: bool;
+let
+   w_005 = Cg;
+   w_003 = reset;
+   w_006 = (w_005 >= Nb);
+   w_001 = (false -> (pre w_000));
+   w_004 = (w_006 or w_001);
+   epsilon = w_000;
+   w_000 = (if w_003 then w_002 else w_004);
+   w_002 = false;
+tel
+node noir(Cg: int; reset: bool) returns (epsilon: bool);
+var
+   w_000: bool;
+   w_001: bool;
+   w_002: bool;
+   w_003: bool;
+   w_004: bool;
+   w_005: int;
+   w_006: bool;
+let
+   w_005 = Cg;
+   w_003 = reset;
+   w_006 = (w_005 <= Nb);
+   w_001 = (false -> (pre w_000));
+   w_004 = (w_006 or w_001);
+   epsilon = w_000;
+   w_000 = (if w_003 then w_002 else w_004);
+   w_002 = false;
+tel
