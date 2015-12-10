@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.250"
+    ComputedModelVersion    "1.251"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -30,7 +30,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [896.0, 203.0, 953.0, 784.0]
+      Location		      [930.0, 226.0, 953.0, 784.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -70,7 +70,7 @@ Model {
 	}
 	Object {
 	  $ObjectID		  7
-	  IsActive		  [0]
+	  IsActive		  [1]
 	  ViewObjType		  "SimulinkSubsys"
 	  LoadSaveID		  "642"
 	  Extents		  [913.0, 599.0]
@@ -79,12 +79,12 @@ Model {
 	}
 	Object {
 	  $ObjectID		  8
-	  IsActive		  [1]
+	  IsActive		  [0]
 	  ViewObjType		  "SimulinkSubsys"
-	  LoadSaveID		  "147"
+	  LoadSaveID		  "749"
 	  Extents		  [913.0, 599.0]
-	  ZoomFactor		  [1.0]
-	  Offset		  [-72.298659816517556, -65.476945016899435]
+	  ZoomFactor		  [0.8]
+	  Offset		  [-70.618349926173892, 12.319047619047353]
 	}
 	PropName		"EditorsInfo"
       }
@@ -96,9 +96,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "elkhadiy"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Dec 01 15:12:41 2015"
-  RTWModifiedTimeStamp	  370883558
-  ModelVersionFormat	  "1.%<AutoIncrement:250>"
+  LastModifiedDate	  "Tue Dec 01 16:31:00 2015"
+  RTWModifiedTimeStamp	  370888243
+  ModelVersionFormat	  "1.%<AutoIncrement:251>"
   ConfigurationManager	  "none"
   SampleTimeColors	  on
   SampleTimeAnnotations	  off
@@ -1056,7 +1056,7 @@ Model {
   }
   System {
     Name		    "ExRobotAndEnvironmentController"
-    Location		    [787, 198, 1740, 982]
+    Location		    [896, 203, 1849, 987]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1107,8 +1107,8 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Controller"
-	Location		[896, 203, 1849, 987]
-	Open			on
+	Location		[930, 226, 1883, 1010]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1199,8 +1199,8 @@ Model {
 	  RequestExecContextInheritance	off
 	  System {
 	    Name		    "Planificateur"
-	    Location		    [896, 203, 1849, 987]
-	    Open		    off
+	    Location		    [930, 226, 1883, 1010]
+	    Open		    on
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -1698,7 +1698,7 @@ Model {
 	      RequestExecContextInheritance off
 	      System {
 		Name			"detecteur séquence blanc-noir-blanc"
-		Location		[787, 198, 1740, 982]
+		Location		[930, 226, 1883, 1010]
 		Open			on
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -2072,7 +2072,6 @@ Model {
 		  Ports			  [2, 1]
 		  Position		  [165, 17, 195, 48]
 		  ZOrder		  197
-		  Operator		  "<="
 		  InputSameDT		  off
 		  OutDataTypeStr	  "boolean"
 		}
@@ -2083,6 +2082,7 @@ Model {
 		  Ports			  [2, 1]
 		  Position		  [505, 132, 535, 163]
 		  ZOrder		  198
+		  Operator		  "<="
 		  InputSameDT		  off
 		  OutDataTypeStr	  "boolean"
 		}

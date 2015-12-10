@@ -1,0 +1,8 @@
+#ifndef PLANIFICATEUR_EXT_H
+#define PLANIFICATEUR_EXT_H
+
+#define SOEUIL_OBSTACLE 50
+#define SOEUIL_NOIR 175
+#define SOEUIL_BLANC 105
+
+#endif

@@ -22,14 +22,15 @@ AVEC COMMUNICATION
 /**** CODE GLUE, A MODIFIER/ADAPTER */
 /* Ici : inclusion du header Lustre */
 #include <string.h>  /* a cause du strlen plus bas */
-#include "low.h"
-#include "high.h"
+#include "Regulateur.h"
+#include "Planificateur.h"
+#include "Planificateur_ext.h"
 
 /***** OSEK : NE PAS MODIFIER */
 DeclareCounter(SysTimerCnt);
 DeclareResource(lcd);
-DeclareTask(LowTask);
-DeclareTask(HighTask);
+DeclareTask(RegulateurTask);
+DeclareTask(PlanificateurTask);
 
 /* LEJOS OSEK hook to be invoked from an ISR in category 2 */
 void user_1ms_isr_type2(void)
@@ -81,16 +82,20 @@ accessoires etc.
 	Pour gérer les communications :
 */
 
+/*
 _integer H2L;       // buffer High -> Low
 _integer L2H[2];    // double-buffer Low -> High
 _integer L2Hindex;  // 0 ou 1 : indique dans quelle
                     // case du double-buffer Low doit écrire
 
 _integer Hcpt;      // compte les "instants" High
+*/
+_boolean etat; // Communication entre Planificateur et Regulateur
+
 
 //Le ratio des periodes :
 //(le compilateur se charge du calcul statiquement)
-#define PRATIO ((int)(LOW_PERIOD/HIGH_PERIOD))
+#define PRATIO ((int)(REGULATEUR_PERIOD/PLANIFICATEUR_PERIOD))
 
 /*------------------------------
 	Initialisations
@@ -104,13 +109,16 @@ Cette fonction doit être définie ici.
 ------------------------------*/
 
 void usr_init(void) {
-	high_init();
-	low_init();
+	Planificateur_init();
+	Regulateur_init();
+	etat = 0;
+	// TODO: Calibrage
+
 	//Index de la case où L ecrira la premiere fois
-	L2Hindex = 0;
+	//L2Hindex = 0;
 	//Il faut initialiser le registre où H lira la premiere fois
 	//c'est-a-dire celui ou L n'ecrit pas !
-	L2H[1] = 0;
+	//L2H[1] = 0;
 }
 
 /* Procédure de sortie */
@@ -128,30 +136,20 @@ void show_var(char* what, int line, int var) {
 }
 
 
-void high_O_s(_integer val){
-	show_var("high_O_s", 1, val);
+void Planificateur_O_etat(_integer val){
+	show_var("etat", 1, val);
+	etat = val;
 }
 
-void high_O_h2l(_integer val){
-	//Communication H -> L 
-	//si Hcpt == 0, on modifie H2L, on est sur qu'il sera lu
-	//par Low avant le prochain Lupto !
-	show_var("high_O_h2l", 2, val);
-	if (Hcpt == 0) {
-		H2L = val;
-	}
-	//sinon rien
+void Regulateur_O_u_d(_integer val){
+	show_var("u_d", 4, val);
 }
 
-void low_O_s(_integer val){
-	show_var("low_O_s", 4, val);
-}
-
-void low_O_l2h(_integer val){
+void Regulateur_O_u_g(_integer val){
 	//Communication L -> H
 	//écrit dans la case du buffer désignée par L2Hindex :
-	L2H[L2Hindex] = val;
-	show_var("low_O_l2h", 5, val);
+	//L2H[L2Hindex] = val;
+	show_var("u_g", 5, val);
 }
 
 /*------------------------------
@@ -163,15 +161,16 @@ Elles doivent :
 ------------------------------*/
 
 
-TASK(HighTask) {
+TASK(PlanificateurTask) {
 	/* Positionnement des entrées */
-	high_I_e( ecrobot_get_touch_sensor(NXT_PORT_S1) );
-
-	/* On lit toujours dans la case opposée à L2Hindex */
-	high_I_l2h(L2H[!L2Hindex]);
+	Planificateur_I_Obstacle ( ecrobot_get_touch_sensor(NXT_PORT_S1) );
+	Planificateur_I_Cg ( ecrobot_get_touch_sensor(NXT_PORT_S1) );
+	Planificateur_I_soeuil_obstacle( ecrobot_get_touch_sensor(NXT_PORT_S1) );
+	Planificateur_I_soeuil_noir( ecrobot_get_touch_sensor(NXT_PORT_S1) );
+	Planificateur_I_soeuil_blanc( ecrobot_get_touch_sensor(NXT_PORT_S1) );
 
 	/* Appel du step */
-	high_step();
+	Planificateur_step();
 
 	/* OÙ on en est avec la tache Low ? */
 	if (Hcpt  == 0) {
@@ -190,7 +189,7 @@ TASK(HighTask) {
 	
 	
 
-TASK(LowTask) {
+TASK(RegulateurTask) {
 
 	/* Positionnement des entrées */
 	low_I_e( ecrobot_get_touch_sensor(NXT_PORT_S2) );
