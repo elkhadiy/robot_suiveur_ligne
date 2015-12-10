@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.251"
+    ComputedModelVersion    "1.255"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -30,7 +30,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [930.0, 226.0, 953.0, 784.0]
+      Location		      [72.0, 359.0, 838.0, 531.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -47,46 +47,16 @@ Model {
 	$ClassName		"Simulink.ExplorerBarInfo"
 	Visible			[1]
       }
-      Array {
-	Type			"Simulink.EditorInfo"
-	Dimension		4
-	Object {
-	  $ObjectID		  5
-	  IsActive		  [0]
-	  ViewObjType		  "SimulinkTopLevel"
-	  LoadSaveID		  "0"
-	  Extents		  [913.0, 599.0]
-	  ZoomFactor		  [0.8]
-	  Offset		  [-180.0011780006032, -169.15219296592278]
-	}
-	Object {
-	  $ObjectID		  6
-	  IsActive		  [0]
-	  ViewObjType		  "SimulinkSubsys"
-	  LoadSaveID		  "192"
-	  Extents		  [1090.0, 793.0]
-	  ZoomFactor		  [1.0]
-	  Offset		  [0.0, 0.0]
-	}
-	Object {
-	  $ObjectID		  7
-	  IsActive		  [1]
-	  ViewObjType		  "SimulinkSubsys"
-	  LoadSaveID		  "642"
-	  Extents		  [913.0, 599.0]
-	  ZoomFactor		  [1.0]
-	  Offset		  [-106.72695860229123, -83.94348316083]
-	}
-	Object {
-	  $ObjectID		  8
-	  IsActive		  [0]
-	  ViewObjType		  "SimulinkSubsys"
-	  LoadSaveID		  "749"
-	  Extents		  [913.0, 599.0]
-	  ZoomFactor		  [0.8]
-	  Offset		  [-70.618349926173892, 12.319047619047353]
-	}
-	PropName		"EditorsInfo"
+      Object {
+	$PropName		"EditorsInfo"
+	$ObjectID		5
+	$ClassName		"Simulink.EditorInfo"
+	IsActive		[1]
+	ViewObjType		"SimulinkSubsys"
+	LoadSaveID		"749"
+	Extents			[802.0, 376.0]
+	ZoomFactor		[0.8]
+	Offset			[-16.5977553442126, -10.166666666666742]
       }
     }
   }
@@ -96,9 +66,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "elkhadiy"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Dec 01 16:31:00 2015"
-  RTWModifiedTimeStamp	  370888243
-  ModelVersionFormat	  "1.%<AutoIncrement:251>"
+  LastModifiedDate	  "Thu Dec 10 17:35:52 2015"
+  RTWModifiedTimeStamp	  371668927
+  ModelVersionFormat	  "1.%<AutoIncrement:255>"
   ConfigurationManager	  "none"
   SampleTimeColors	  on
   SampleTimeAnnotations	  off
@@ -138,7 +108,7 @@ Model {
   TryForcingSFcnDF	  off
   Object {
     $PropName		    "DataLoggingOverride"
-    $ObjectID		    9
+    $ObjectID		    6
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
     model_		    "ExRobotAndEnvironmentController"
     Array {
@@ -200,16 +170,16 @@ Model {
     Type		    "Handle"
     Dimension		    1
     Simulink.ConfigSet {
-      $ObjectID		      10
+      $ObjectID		      7
       Version		      "1.14.2"
       Array {
 	Type			"Handle"
 	Dimension		9
 	Simulink.SolverCC {
-	  $ObjectID		  11
+	  $ObjectID		  8
 	  Version		  "1.14.2"
 	  StartTime		  "0.0"
-	  StopTime		  "1000"
+	  StopTime		  "100"
 	  AbsTol		  "auto"
 	  FixedStep		  ".01"
 	  InitialStep		  "auto"
@@ -241,7 +211,7 @@ Model {
 	  InsertRTBMode		  "Whenever possible"
 	}
 	Simulink.DataIOCC {
-	  $ObjectID		  12
+	  $ObjectID		  9
 	  Version		  "1.14.2"
 	  Decimation		  "1"
 	  ExternalInput		  "[t, u]"
@@ -274,7 +244,7 @@ Model {
 	  Refine		  "1"
 	}
 	Simulink.OptimizationCC {
-	  $ObjectID		  13
+	  $ObjectID		  10
 	  Version		  "1.14.2"
 	  Array {
 	    Type		    "Cell"
@@ -330,7 +300,7 @@ Model {
 	  ParallelExecutionInRapidAccelerator on
 	}
 	Simulink.DebuggingCC {
-	  $ObjectID		  14
+	  $ObjectID		  11
 	  Version		  "1.14.2"
 	  RTPrefix		  "error"
 	  ConsistencyChecking	  "none"
@@ -420,7 +390,7 @@ Model {
 	  SFTransitionActionBeforeConditionDiag	"warning"
 	}
 	Simulink.HardwareCC {
-	  $ObjectID		  15
+	  $ObjectID		  12
 	  Version		  "1.14.2"
 	  ProdBitPerChar	  8
 	  ProdBitPerShort	  16
@@ -461,7 +431,7 @@ Model {
 	  ProdEqTarget		  on
 	}
 	Simulink.ModelReferenceCC {
-	  $ObjectID		  16
+	  $ObjectID		  13
 	  Version		  "1.14.2"
 	  UpdateModelReferenceTargets "IfOutOfDateOrStructuralChange"
 	  CheckModelReferenceTargetMessage "error"
@@ -476,7 +446,7 @@ Model {
 	  SupportModelReferenceSimTargetCustomCode off
 	}
 	Simulink.SFSimCC {
-	  $ObjectID		  17
+	  $ObjectID		  14
 	  Version		  "1.14.2"
 	  SFSimEnableDebug	  on
 	  SFSimOverflowDetection  on
@@ -492,7 +462,7 @@ Model {
 	}
 	Simulink.RTWCC {
 	  $BackupClass		  "Simulink.RTWCC"
-	  $ObjectID		  18
+	  $ObjectID		  15
 	  Version		  "1.14.2"
 	  Array {
 	    Type		    "Cell"
@@ -570,7 +540,7 @@ Model {
 	    Type		    "Handle"
 	    Dimension		    2
 	    Simulink.CodeAppCC {
-	      $ObjectID		      19
+	      $ObjectID		      16
 	      Version		      "1.14.2"
 	      Array {
 		Type			"Cell"
@@ -635,7 +605,7 @@ Model {
 	    }
 	    Simulink.GRTTargetCC {
 	      $BackupClass	      "Simulink.TargetCC"
-	      $ObjectID		      20
+	      $ObjectID		      17
 	      Version		      "1.14.2"
 	      Array {
 		Type			"Cell"
@@ -720,7 +690,7 @@ Model {
 	  }
 	}
 	hdlcoderui.hdlcc {
-	  $ObjectID		  21
+	  $ObjectID		  18
 	  Version		  "1.14.2"
 	  Description		  "HDL Coder custom configuration component"
 	  Name			  "HDL Coder"
@@ -742,11 +712,11 @@ Model {
   }
   Simulink.ConfigSet {
     $PropName		    "ActiveConfigurationSet"
-    $ObjectID		    10
+    $ObjectID		    7
   }
   Object {
     $PropName		    "DataTransfer"
-    $ObjectID		    22
+    $ObjectID		    19
     $ClassName		    "Simulink.GlobalDataTransfer"
     DefaultTransitionBetweenSyncTasks "Ensure deterministic transfer (maximum delay)"
     DefaultTransitionBetweenAsyncTasks "Ensure data integrity only"
@@ -975,6 +945,24 @@ Model {
       RndMeth		      "Floor"
     }
     Block {
+      BlockType		      Scope
+      ModelBased	      off
+      TickLabels	      "OneTimeTick"
+      ZoomMode		      "on"
+      Grid		      "on"
+      TimeRange		      "auto"
+      YMin		      "-5"
+      YMax		      "5"
+      SaveToWorkspace	      off
+      SaveName		      "ScopeData"
+      DataFormat	      "Array"
+      LimitDataPoints	      on
+      MaxDataPoints	      "5000"
+      Decimation	      "1"
+      SampleInput	      off
+      SampleTime	      "-1"
+    }
+    Block {
       BlockType		      SubSystem
       ShowPortLabels	      "FromPortIcon"
       Permissions	      "ReadWrite"
@@ -1056,8 +1044,8 @@ Model {
   }
   System {
     Name		    "ExRobotAndEnvironmentController"
-    Location		    [896, 203, 1849, 987]
-    Open		    on
+    Location		    [165, 459, 1003, 990]
+    Open		    off
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
     ScreenColor		    "white"
@@ -1068,9 +1056,9 @@ Model {
     TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "80"
+    ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "776"
+    SIDHighWatermark	    "778"
     Block {
       BlockType		      DiscretePulseGenerator
       Name		      "Capteur Distance"
@@ -1089,11 +1077,21 @@ Model {
       BlockType		      Constant
       Name		      "Constant"
       SID		      "766"
-      Position		      [760, 180, 790, 210]
+      Position		      [645, 270, 675, 300]
       ZOrder		      194
       BlockMirror	      on
       ForegroundColor	      "[0.501961, 0.501961, 0.501961]"
       Value		      "50"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "Constant1"
+      SID		      "778"
+      Position		      [700, 207, 775, 233]
+      ZOrder		      196
+      BlockMirror	      on
+      ForegroundColor	      "[0.501961, 0.501961, 0.501961]"
+      Value		      "MAX_SPEED"
     }
     Block {
       BlockType		      SubSystem
@@ -1107,7 +1105,7 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Controller"
-	Location		[930, 226, 1883, 1010]
+	Location		[165, 459, 1003, 990]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1199,7 +1197,7 @@ Model {
 	  RequestExecContextInheritance	off
 	  System {
 	    Name		    "Planificateur"
-	    Location		    [930, 226, 1883, 1010]
+	    Location		    [72, 359, 910, 890]
 	    Open		    on
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -1225,7 +1223,7 @@ Model {
 	      BlockType		      Inport
 	      Name		      "Cg"
 	      SID		      "751"
-	      Position		      [487, 435, 517, 450]
+	      Position		      [20, 90, 50, 105]
 	      ZOrder		      190
 	      BlockRotation	      270
 	      Port		      "2"
@@ -1449,7 +1447,7 @@ Model {
 	      RequestExecContextInheritance off
 	      System {
 		Name			"detect_front_montant"
-		Location		[474, 137, 1756, 974]
+		Location		[42, 254, 880, 785]
 		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -1466,7 +1464,7 @@ Model {
 		  BlockType		  Inport
 		  Name			  "In1"
 		  SID			  "684"
-		  Position		  [20, 163, 50, 177]
+		  Position		  [40, 158, 70, 172]
 		  ZOrder		  61
 		  IconDisplay		  "Port number"
 		}
@@ -1505,7 +1503,7 @@ Model {
 		  BlockType		  Outport
 		  Name			  "Out1"
 		  SID			  "688"
-		  Position		  [685, 108, 715, 122]
+		  Position		  [290, 108, 320, 122]
 		  ZOrder		  62
 		  IconDisplay		  "Port number"
 		}
@@ -1513,25 +1511,21 @@ Model {
 		  ZOrder		  1
 		  SrcBlock		  "In1"
 		  SrcPort		  1
-		  Points		  [0, -1; 111, 0]
+		  Points		  [91, 0]
 		  Branch {
-		    ZOrder		    2
-		    Points		    [188, 0; 0, -129]
+		    ZOrder		    7
+		    Points		    [188, 0; 0, -125]
 		    DstBlock		    "Unit Delay"
 		    DstPort		    1
 		  }
 		  Branch {
 		    ZOrder		    3
-		    Points		    [0, -49]
+		    Points		    [0, -45]
 		    DstBlock		    "Logical\nOperator3"
 		    DstPort		    2
 		  }
 		}
 		Line {
-		  FontName		  "Helvetica"
-		  FontSize		  9
-		  FontWeight		  "normal"
-		  FontAngle		  "normal"
 		  ZOrder		  4
 		  SrcBlock		  "Logical\nOperator2"
 		  SrcPort		  1
@@ -1539,10 +1533,6 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  FontName		  "Helvetica"
-		  FontSize		  9
-		  FontWeight		  "normal"
-		  FontAngle		  "normal"
 		  ZOrder		  5
 		  SrcBlock		  "Unit Delay"
 		  SrcPort		  1
@@ -1551,10 +1541,6 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  FontName		  "Helvetica"
-		  FontSize		  9
-		  FontWeight		  "normal"
-		  FontAngle		  "normal"
 		  ZOrder		  6
 		  SrcBlock		  "Logical\nOperator3"
 		  SrcPort		  1
@@ -1653,10 +1639,6 @@ Model {
 		  }
 		}
 		Line {
-		  FontName		  "Helvetica"
-		  FontSize		  9
-		  FontWeight		  "normal"
-		  FontAngle		  "normal"
 		  ZOrder		  4
 		  SrcBlock		  "Logical\nOperator2"
 		  SrcPort		  1
@@ -1664,10 +1646,6 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  FontName		  "Helvetica"
-		  FontSize		  9
-		  FontWeight		  "normal"
-		  FontAngle		  "normal"
 		  ZOrder		  5
 		  SrcBlock		  "Unit Delay"
 		  SrcPort		  1
@@ -1676,10 +1654,6 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  FontName		  "Helvetica"
-		  FontSize		  9
-		  FontWeight		  "normal"
-		  FontAngle		  "normal"
 		  ZOrder		  6
 		  SrcBlock		  "Logical\nOperator3"
 		  SrcPort		  1
@@ -1698,8 +1672,8 @@ Model {
 	      RequestExecContextInheritance off
 	      System {
 		Name			"detecteur séquence blanc-noir-blanc"
-		Location		[930, 226, 1883, 1010]
-		Open			on
+		Location		[668, 272, 1506, 803]
+		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
 		ScreenColor		"white"
@@ -2072,6 +2046,7 @@ Model {
 		  Ports			  [2, 1]
 		  Position		  [165, 17, 195, 48]
 		  ZOrder		  197
+		  Operator		  "<="
 		  InputSameDT		  off
 		  OutDataTypeStr	  "boolean"
 		}
@@ -2082,7 +2057,6 @@ Model {
 		  Ports			  [2, 1]
 		  Position		  [505, 132, 535, 163]
 		  ZOrder		  198
-		  Operator		  "<="
 		  InputSameDT		  off
 		  OutDataTypeStr	  "boolean"
 		}
@@ -2194,7 +2168,7 @@ Model {
 	      BlockType		      Outport
 	      Name		      "etat"
 	      SID		      "752"
-	      Position		      [982, 690, 1012, 705]
+	      Position		      [750, 65, 780, 80]
 	      ZOrder		      191
 	      BlockRotation	      270
 	      BlockMirror	      on
@@ -2212,7 +2186,7 @@ Model {
 	      ZOrder		      92
 	      SrcBlock		      "Cg"
 	      SrcPort		      1
-	      Points		      [0, -315]
+	      Points		      [0, -79; 538, 0; 0, 109]
 	      DstBlock		      "detecteur séquence blanc-noir-blanc"
 	      DstPort		      1
 	    }
@@ -2250,10 +2224,6 @@ Model {
 	      DstPort		      2
 	    }
 	    Line {
-	      FontName		      "Helvetica"
-	      FontSize		      9
-	      FontWeight	      "normal"
-	      FontAngle		      "normal"
 	      ZOrder		      69
 	      SrcBlock		      "Register"
 	      SrcPort		      1
@@ -2262,10 +2232,6 @@ Model {
 	      DstPort		      2
 	    }
 	    Line {
-	      FontName		      "Helvetica"
-	      FontSize		      9
-	      FontWeight	      "normal"
-	      FontAngle		      "normal"
 	      ZOrder		      32
 	      SrcBlock		      "detecteur séquence blanc-noir-blanc"
 	      SrcPort		      1
@@ -2283,14 +2249,10 @@ Model {
 	      }
 	    }
 	    Line {
-	      FontName		      "Helvetica"
-	      FontSize		      9
-	      FontWeight	      "normal"
-	      FontAngle		      "normal"
 	      ZOrder		      93
 	      SrcBlock		      "Logical\nOperator"
 	      SrcPort		      1
-	      Points		      [57, 0]
+	      Points		      [9, 0; 0, -125]
 	      DstBlock		      "etat"
 	      DstPort		      1
 	    }
@@ -2337,7 +2299,7 @@ Model {
 	  RequestExecContextInheritance	off
 	  System {
 	    Name		    "Regulateur"
-	    Location		    [896, 203, 1849, 987]
+	    Location		    [42, 254, 880, 785]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -2373,7 +2335,7 @@ Model {
 	      BlockType		      Inport
 	      Name		      "Cg"
 	      SID		      "773"
-	      Position		      [67, 258, 97, 272]
+	      Position		      [65, 258, 95, 272]
 	      ZOrder		      186
 	      Port		      "3"
 	      IconDisplay	      "Port number"
@@ -2399,7 +2361,7 @@ Model {
 	      RequestExecContextInheritance off
 	      System {
 		Name			"Calcul_ecart"
-		Location		[373, 269, 811, 708]
+		Location		[42, 254, 880, 785]
 		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -3217,10 +3179,6 @@ Model {
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  FontName		  "Helvetica"
-	  FontSize		  9
-	  FontWeight		  "normal"
-	  FontAngle		  "normal"
 	  ZOrder		  4
 	  SrcBlock		  "Cg"
 	  SrcPort		  1
@@ -3321,8 +3279,8 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Environment"
-	Location		[721, 64, 1851, 1042]
-	Open			on
+	Location		[668, 272, 1506, 803]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -3523,7 +3481,7 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Robot"
-	Location		[33, 525, 918, 1195]
+	Location		[668, 272, 1506, 803]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -3891,6 +3849,36 @@ Model {
       }
     }
     Block {
+      BlockType		      Scope
+      Name		      "Scope"
+      SID		      "777"
+      Ports		      [2]
+      Position		      [120, 56, 150, 89]
+      ZOrder		      195
+      Floating		      off
+      Location		      [123, 600, 447, 839]
+      Open		      on
+      NumInputPorts	      "2"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+	axes2			"%<SignalLabel>"
+      }
+      List {
+	ListType		ScopeGraphics
+	FigureColor		"[0.501960784313725 0.501960784313725 0.501960784313725]"
+	AxesColor		"[0 0 0]"
+	AxesTickColor		"[1 1 1]"
+	LineColors		"[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+	LineStyles		"-|-|-|-|-|-"
+	LineWidths		"[0.5 0.5 0.5 0.5 0.5 0.5]"
+	MarkerStyles		"none|none|none|none|none|none"
+      }
+      ShowLegends	      off
+      YMin		      "0~0"
+      YMax		      "1~1"
+    }
+    Block {
       BlockType		      SubSystem
       Name		      "front montant double"
       SID		      "735"
@@ -3902,7 +3890,7 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"front montant double"
-	Location		[344, 51, 1474, 1029]
+	Location		[42, 254, 880, 785]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -3914,7 +3902,7 @@ Model {
 	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"125"
+	ZoomFactor		"100"
 	Block {
 	  BlockType		  Inport
 	  Name			  "In1"
@@ -3998,10 +3986,6 @@ Model {
 	  OutDataTypeStr	  "double"
 	}
 	Line {
-	  FontName		  "Helvetica"
-	  FontSize		  9
-	  FontWeight		  "normal"
-	  FontAngle		  "normal"
 	  ZOrder		  4
 	  SrcBlock		  "Logical\nOperator2"
 	  SrcPort		  1
@@ -4009,10 +3993,6 @@ Model {
 	  DstPort		  1
 	}
 	Line {
-	  FontName		  "Helvetica"
-	  FontSize		  9
-	  FontWeight		  "normal"
-	  FontAngle		  "normal"
 	  ZOrder		  5
 	  SrcBlock		  "Unit Delay"
 	  SrcPort		  1
@@ -4123,17 +4103,37 @@ Model {
       ZOrder		      6
       SrcBlock		      "Controller"
       SrcPort		      1
-      Points		      [-185, 0; 0, 205]
-      DstBlock		      "Robot"
-      DstPort		      2
+      Points		      [-147, 0]
+      Branch {
+	ZOrder			36
+	Points			[0, -60]
+	DstBlock		"Scope"
+	DstPort			1
+      }
+      Branch {
+	ZOrder			35
+	Points			[-38, 0; 0, 205]
+	DstBlock		"Robot"
+	DstPort			2
+      }
     }
     Line {
       ZOrder		      7
       SrcBlock		      "Controller"
       SrcPort		      2
-      Points		      [-155, 0; 0, 110]
-      DstBlock		      "Robot"
-      DstPort		      1
+      Points		      [-121, 0]
+      Branch {
+	ZOrder			38
+	Points			[0, -95]
+	DstBlock		"Scope"
+	DstPort			2
+      }
+      Branch {
+	ZOrder			37
+	Points			[-34, 0; 0, 110]
+	DstBlock		"Robot"
+	DstPort			1
+      }
     }
     Line {
       ZOrder		      10
@@ -4153,36 +4153,35 @@ Model {
       ZOrder		      21
       SrcBlock		      "Constant"
       SrcPort		      1
-      Points		      [-156, 0; 0, -45; -183, 0]
+      Points		      [-41, 0; 0, -120; -183, 0]
       Branch {
-	ZOrder			23
+	ZOrder			25
 	Points			[0, 15]
 	Branch {
-	  ZOrder		  25
+	  ZOrder		  27
 	  Points		  [0, 15]
-	  Branch {
-	    ZOrder		    27
-	    Points		    [0, 15]
-	    DstBlock		    "Controller"
-	    DstPort		    7
-	  }
-	  Branch {
-	    ZOrder		    26
-	    DstBlock		    "Controller"
-	    DstPort		    6
-	  }
+	  DstBlock		  "Controller"
+	  DstPort		  7
 	}
 	Branch {
-	  ZOrder		  24
+	  ZOrder		  26
 	  DstBlock		  "Controller"
-	  DstPort		  5
+	  DstPort		  6
 	}
       }
       Branch {
-	ZOrder			22
+	ZOrder			24
 	DstBlock		"Controller"
-	DstPort			4
+	DstPort			5
       }
+    }
+    Line {
+      ZOrder		      39
+      SrcBlock		      "Constant1"
+      SrcPort		      1
+      Points		      [-79, 0; 0, -70]
+      DstBlock		      "Controller"
+      DstPort		      4
     }
   }
 }

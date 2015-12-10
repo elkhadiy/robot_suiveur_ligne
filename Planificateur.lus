@@ -1,5 +1,5 @@
 -- mdl2lus - 2014 ver. 0.41 (SHA 79444ea)
--- Tue Dec  1 15:29:32 2015
+-- Thu Dec 10 17:36:14 2015
 node Planificateur(Obstacle: real; Cg: real; soeuil_obstacle: real; soeuil_noir: real; soeuil_blanc: real) returns (etat: bool);
 var
    w_000: real;

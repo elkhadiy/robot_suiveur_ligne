@@ -29,8 +29,8 @@ AVEC COMMUNICATION
 /***** OSEK : NE PAS MODIFIER */
 DeclareCounter(SysTimerCnt);
 DeclareResource(lcd);
-DeclareTask(RegulateurTask);
-DeclareTask(PlanificateurTask);
+DeclareTask(HighTask);
+DeclareTask(LowTask);
 
 /* LEJOS OSEK hook to be invoked from an ISR in category 2 */
 void user_1ms_isr_type2(void)
@@ -78,20 +78,28 @@ de variables partagées, de fonctions
 accessoires etc.
 ------------------------------*/
 
-/*
-	Pour gérer les communications :
-*/
-
-/*
-_integer H2L;       // buffer High -> Low
-_integer L2H[2];    // double-buffer Low -> High
-_integer L2Hindex;  // 0 ou 1 : indique dans quelle
-                    // case du double-buffer Low doit écrire
-
-_integer Hcpt;      // compte les "instants" High
-*/
+int soeuil_obstacle = 15;
 _boolean etat; // Communication entre Planificateur et Regulateur
 
+#define CG_PORT NXT_PORT_S1
+#define CD_PORT NXT_PORT_S2
+#define OBSTACLE_PORT NXT_PORT_S3
+
+#define C_in_min 0
+#define C_in_max 1023
+#define C_out_min 0
+#define C_out_max 100
+
+int soeuil_noir, soeuil_blanc,
+	Cg_black, Cg_white,
+	Cd_black, Cd_white;
+
+#define VITESSE_DEMI_TOUR 0.5
+void show_var(char* what, int line, int var);
+long map(long x, long in_min, long in_max, long out_min, long out_max)
+{
+ return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
 
 //Le ratio des periodes :
 //(le compilateur se charge du calcul statiquement)
@@ -108,17 +116,64 @@ appelée à l'initialisation du système.
 Cette fonction doit être définie ici.
 ------------------------------*/
 
+
+
 void usr_init(void) {
 	Planificateur_init();
 	Regulateur_init();
 	etat = 0;
 	// TODO: Calibrage
+	display_goto_xy(0,0);
+	display_string("---Calibrage---");
+	ecrobot_set_light_sensor_active(CG_PORT);
+	ecrobot_set_light_sensor_active(CD_PORT);
+	ecrobot_init_sonar_sensor(OBSTACLE_PORT);
 
-	//Index de la case où L ecrira la premiere fois
-	//L2Hindex = 0;
-	//Il faut initialiser le registre où H lira la premiere fois
-	//c'est-a-dire celui ou L n'ecrit pas !
-	//L2H[1] = 0;
+	int cd_val, cg_val;
+
+	while (!ecrobot_is_ENTER_button_pressed()) {
+		display_goto_xy(0,1);
+		display_string("White threshold");
+		cg_val = ecrobot_get_light_sensor(CG_PORT);
+		show_var("CG = ", 2, cg_val);
+		cd_val = ecrobot_get_light_sensor(CD_PORT);
+		show_var("CD = ", 3, cd_val);
+	}
+
+	while(ecrobot_is_ENTER_button_pressed()) {
+		display_goto_xy(0,4);
+		display_string("Waiting for button release");
+	}
+
+	Cd_white = cd_val;
+	Cg_white = cg_val;
+
+	while (!ecrobot_is_ENTER_button_pressed()) {
+		display_goto_xy(0,4);
+		display_string("Black threshold");
+		cg_val = ecrobot_get_light_sensor(CG_PORT);
+		show_var("CG = ", 5, cg_val);
+		cd_val = ecrobot_get_light_sensor(CD_PORT);
+		show_var("CD = ", 6, cd_val);
+	}
+	
+
+	while(ecrobot_is_ENTER_button_pressed()) {
+		display_goto_xy(0,7);
+		display_string("release btn");
+	}
+
+	Cd_black = cd_val;
+	Cg_black = cg_val;
+
+	display_clear(1);
+	display_goto_xy(0,4);
+	display_string("DONE!");
+
+	systick_wait_ms(1500);
+
+	display_clear(1);
+
 }
 
 /* Procédure de sortie */
@@ -137,19 +192,18 @@ void show_var(char* what, int line, int var) {
 
 
 void Planificateur_O_etat(_integer val){
-	show_var("etat", 1, val);
+	show_var("etat", 3, val);
 	etat = val;
 }
 
-void Regulateur_O_u_d(_integer val){
-	show_var("u_d", 4, val);
+void Regulateur_O_u_d(_real val){
+	show_var("u_d", 4, (int)(val*100));
+	nxt_motor_set_speed(NXT_PORT_A, (int)(val*100), 0);
 }
 
-void Regulateur_O_u_g(_integer val){
-	//Communication L -> H
-	//écrit dans la case du buffer désignée par L2Hindex :
-	//L2H[L2Hindex] = val;
-	show_var("u_g", 5, val);
+void Regulateur_O_u_g(_real val){
+	show_var("u_g", 5, (int)(val*100));
+	nxt_motor_set_speed(NXT_PORT_B, (int)(val*100), 0);
 }
 
 /*------------------------------
@@ -161,44 +215,40 @@ Elles doivent :
 ------------------------------*/
 
 
-TASK(PlanificateurTask) {
+TASK(LowTask) {
 	/* Positionnement des entrées */
-	Planificateur_I_Obstacle ( ecrobot_get_touch_sensor(NXT_PORT_S1) );
-	Planificateur_I_Cg ( ecrobot_get_touch_sensor(NXT_PORT_S1) );
-	Planificateur_I_soeuil_obstacle( ecrobot_get_touch_sensor(NXT_PORT_S1) );
-	Planificateur_I_soeuil_noir( ecrobot_get_touch_sensor(NXT_PORT_S1) );
-	Planificateur_I_soeuil_blanc( ecrobot_get_touch_sensor(NXT_PORT_S1) );
+	_real Cg = 100 - map(ecrobot_get_light_sensor(CG_PORT), Cg_white, Cg_black, C_out_min, C_out_max);
+	_real obstacle =  ecrobot_get_sonar_sensor(OBSTACLE_PORT); 
+	show_var("obs = ", 6, obstacle);
+
+	Planificateur_I_Obstacle ( 50 - obstacle );
+	Planificateur_I_Cg ( Cg );
+	Planificateur_I_soeuil_obstacle( 50 - soeuil_obstacle );
+	Planificateur_I_soeuil_noir( 50 );
+	Planificateur_I_soeuil_blanc( 50 );
 
 	/* Appel du step */
 	Planificateur_step();
 
-	/* OÙ on en est avec la tache Low ? */
-	if (Hcpt  == 0) {
-		/*
-			Low va démarer un cycle juste apres High ...
-		   on "swape"  le double buffer
-		*/
-		L2Hindex = !L2Hindex;
-	}
-	/* et on fait avancer le compteur ... */
-	Hcpt = (Hcpt+1) % PRATIO;
-	
 	/* OSEK : FINALISATION TASK, NE PAS TOUCHER */
 	TerminateTask();
 }
 	
 	
 
-TASK(RegulateurTask) {
-
+TASK(HighTask) {
 	/* Positionnement des entrées */
-	low_I_e( ecrobot_get_touch_sensor(NXT_PORT_S2) );
-
-	// Com H -> L, on lit toujours la valeur courante de H2L
-	low_I_h2l(H2L);
+	_real Cg = 100 - map(ecrobot_get_light_sensor(CG_PORT), Cg_white, Cg_black, C_out_min, C_out_max);
+	_real Cd = 100 - map(ecrobot_get_light_sensor(CD_PORT), Cd_white, Cd_black, C_out_min, C_out_max);
+	show_var("Cg = ", 1, Cg);
+	show_var("Cd = ", 2, Cd);
+	Regulateur_I_etat(etat);
+	Regulateur_I_vitesse_rotation(VITESSE_DEMI_TOUR);
+	Regulateur_I_Cg( Cg );
+	Regulateur_I_Cd( Cd );
 
 	/* Appel du step */
-	low_step();
+	Regulateur_step();
 
 	/* OSEK : FINALISATION TASK, NE PAS TOUCHER */
 	TerminateTask();

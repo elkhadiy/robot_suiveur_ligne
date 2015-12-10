@@ -1,7 +1,7 @@
 /********
 * ec2c version 0.67
 * c file generated for node : Regulateur 
-* context   method = GLOBAL
+* context   method = STATIC
 * ext call  method = PROCEDURES
 ********/
 /* This program needs external declarations */
@@ -14,53 +14,66 @@ extern _real kp_teta;
 extern _real ki_teta;
 --------*/
 /*--------
+Internal structure for the call
+--------*/
+typedef struct  {
+   
+   //INPUTS
+   _boolean _etat;
+   _real _vitesse_rotation;
+   _real _Cg;
+   _real _Cd;
+   //OUTPUTS
+   _real _u_d;
+   _real _u_g;
+   //REGISTERS
+   _real M25;
+   _boolean M25_nil;
+   _boolean M22;
+} Regulateur_ctx;
+
+// Single Static Context
+static Regulateur_ctx ctx;
+/*--------
 Output procedures must be defined,
 Input procedures must be used:
 --------*/
-void Regulateur_I_etat(Regulateur_ctx* ctx, _boolean V){
-   ctx->_etat = V;
+void Regulateur_I_etat(_boolean V){
+   ctx._etat = V;
 }
-void Regulateur_I_vitesse_rotation(Regulateur_ctx* ctx, _real V){
-   ctx->_vitesse_rotation = V;
+void Regulateur_I_vitesse_rotation(_real V){
+   ctx._vitesse_rotation = V;
 }
-void Regulateur_I_Cg(Regulateur_ctx* ctx, _real V){
-   ctx->_Cg = V;
+void Regulateur_I_Cg(_real V){
+   ctx._Cg = V;
 }
-void Regulateur_I_Cd(Regulateur_ctx* ctx, _real V){
-   ctx->_Cd = V;
+void Regulateur_I_Cd(_real V){
+   ctx._Cd = V;
 }
-extern void Regulateur_O_u_d(void* cdata, _real);
-extern void Regulateur_O_u_g(void* cdata, _real);
+extern void Regulateur_O_u_d(_real);
+extern void Regulateur_O_u_g(_real);
 #ifdef CKCHECK
-extern void Regulateur_BOT_u_d(void* cdata);
-extern void Regulateur_BOT_u_g(void* cdata);
+extern void Regulateur_BOT_u_d();
+extern void Regulateur_BOT_u_g();
 #endif
 /*--------
 Internal reset input procedure
 --------*/
-static void Regulateur_reset_input(Regulateur_ctx* ctx){
+static void Regulateur_reset_input(){
    //NOTHING FOR THIS VERSION...
 }
 /*--------
 Reset procedure
 --------*/
-void Regulateur_reset(Regulateur_ctx* ctx){
-   ctx->M25_nil = _true;
-   ctx->M22 = _true;
-   Regulateur_reset_input(ctx);
-}
-/*--------
-Initialisation of an internal structure
---------*/
-void Regulateur_init(Regulateur_ctx* ctx, void* cdata){
-   ctx->client_data = cdata;
-   Regulateur_reset(ctx);
-   
+void Regulateur_reset(){
+   ctx.M25_nil = _true;
+   ctx.M22 = _true;
+   Regulateur_reset_input();
 }
 /*--------
 Step procedure
 --------*/
-void Regulateur_step(Regulateur_ctx* ctx){
+void Regulateur_step(){
 //LOCAL VARIABLES
    _real L6;
    _real L17;
@@ -94,13 +107,13 @@ void Regulateur_step(Regulateur_ctx* ctx){
 //CODE
    L6 = (1.000000 / 2.000000);
    L17 = (pi / 200.000000);
-   L20 = (ctx->_Cd - ctx->_Cg);
+   L20 = (ctx._Cd - ctx._Cg);
    L16 = (L17 * L20);
    L14 = (0.002000 * L16);
-   if (ctx->M22) {
+   if (ctx.M22) {
       L21 = 0.000000;
    } else {
-      L21 = ctx->M25;
+      L21 = ctx.M25;
    }
    L13 = (L14 + L21);
    L11 = (ki_teta * L13);
@@ -115,31 +128,31 @@ void Regulateur_step(Regulateur_ctx* ctx){
       L31 = L33;
    }
    L30 = (- L31);
-   L37 = (ctx->_Cd + ctx->_Cg);
+   L37 = (ctx._Cd + ctx._Cg);
    L35 = (0.005000 * L37);
    L29 = (L30 + L35);
    L28 = (2.000000 * L29);
    L9 = (L10 + L28);
    L5 = (L6 * L9);
-   if (ctx->_etat) {
-      L4 = ctx->_vitesse_rotation;
+   if (ctx._etat) {
+      L4 = ctx._vitesse_rotation;
    } else {
       L4 = L5;
    }
-   Regulateur_O_u_d(ctx->client_data, L4);
+   Regulateur_O_u_d(L4);
    L41 = (- 1.000000);
-   L40 = (L41 * ctx->_vitesse_rotation);
+   L40 = (L41 * ctx._vitesse_rotation);
    L44 = (- L10);
    L43 = (L44 + L28);
    L42 = (L6 * L43);
-   if (ctx->_etat) {
+   if (ctx._etat) {
       L39 = L40;
    } else {
       L39 = L42;
    }
-   Regulateur_O_u_g(ctx->client_data, L39);
+   Regulateur_O_u_g(L39);
    T25 = L13;
-   ctx->M25 = T25;
-   ctx->M25_nil = _false;
-   ctx->M22 = ctx->M22 && !(_true);
+   ctx.M25 = T25;
+   ctx.M25_nil = _false;
+   ctx.M22 = ctx.M22 && !(_true);
 }
