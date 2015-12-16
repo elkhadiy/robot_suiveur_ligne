@@ -81,8 +81,8 @@ accessoires etc.
 int soeuil_obstacle = 15;
 _boolean etat; // Communication entre Planificateur et Regulateur
 
-#define CG_PORT NXT_PORT_S1
-#define CD_PORT NXT_PORT_S2
+#define CG_PORT NXT_PORT_S4
+#define CD_PORT NXT_PORT_S1
 #define OBSTACLE_PORT NXT_PORT_S3
 
 #define C_in_min 0
@@ -90,7 +90,7 @@ _boolean etat; // Communication entre Planificateur et Regulateur
 #define C_out_min 0
 #define C_out_max 100
 
-int soeuil_noir, soeuil_blanc,
+int soeuil_noir = 50, soeuil_blanc = 50,
 	Cg_black, Cg_white,
 	Cd_black, Cd_white;
 
@@ -196,14 +196,23 @@ void Planificateur_O_etat(_integer val){
 	etat = val;
 }
 
+#define DIV 2
+#define MAX_POW 100
+
 void Regulateur_O_u_d(_real val){
-	show_var("u_d", 4, (int)(val*100));
-	nxt_motor_set_speed(NXT_PORT_A, (int)(val*100), 0);
+	int pow = (val*100/DIV);
+	if (pow < -MAX_POW) pow = -MAX_POW;
+	if (pow > MAX_POW) pow = MAX_POW;
+	show_var("u_d", 4, pow);
+	ecrobot_set_motor_speed(NXT_PORT_A, pow);
 }
 
 void Regulateur_O_u_g(_real val){
-	show_var("u_g", 5, (int)(val*100));
-	nxt_motor_set_speed(NXT_PORT_B, (int)(val*100), 0);
+	int pow = (val*100/DIV);
+	if (pow < -MAX_POW) pow = -MAX_POW;
+	if (pow > MAX_POW) pow = MAX_POW;
+	show_var("u_g", 5, pow);
+	ecrobot_set_motor_speed(NXT_PORT_B, pow);
 }
 
 /*------------------------------
@@ -218,14 +227,16 @@ Elles doivent :
 TASK(LowTask) {
 	/* Positionnement des entrées */
 	_real Cg = 100 - map(ecrobot_get_light_sensor(CG_PORT), Cg_white, Cg_black, C_out_min, C_out_max);
+	if (Cg > 100) Cg = 100;
+	if (Cg < 0) Cg = 0;
 	_real obstacle =  ecrobot_get_sonar_sensor(OBSTACLE_PORT); 
 	show_var("obs = ", 6, obstacle);
 
 	Planificateur_I_Obstacle ( 50 - obstacle );
 	Planificateur_I_Cg ( Cg );
 	Planificateur_I_soeuil_obstacle( 50 - soeuil_obstacle );
-	Planificateur_I_soeuil_noir( 50 );
-	Planificateur_I_soeuil_blanc( 50 );
+	Planificateur_I_soeuil_noir( soeuil_noir );
+	Planificateur_I_soeuil_blanc( soeuil_blanc );
 
 	/* Appel du step */
 	Planificateur_step();
@@ -239,7 +250,11 @@ TASK(LowTask) {
 TASK(HighTask) {
 	/* Positionnement des entrées */
 	_real Cg = 100 - map(ecrobot_get_light_sensor(CG_PORT), Cg_white, Cg_black, C_out_min, C_out_max);
+	if (Cg > 100) Cg = 100;
+	if (Cg < 0) Cg = 0;
 	_real Cd = 100 - map(ecrobot_get_light_sensor(CD_PORT), Cd_white, Cd_black, C_out_min, C_out_max);
+	if (Cd > 100) Cd = 100;
+	if (Cd < 0) Cd = 0;
 	show_var("Cg = ", 1, Cg);
 	show_var("Cd = ", 2, Cd);
 	Regulateur_I_etat(etat);
