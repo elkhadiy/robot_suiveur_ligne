@@ -1,2 +1,7 @@
 .*
 !/.gitignore
+*.d
+*.ld
+*.rxe
+*.bin
+*.map

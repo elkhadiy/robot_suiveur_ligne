@@ -55,4 +55,4 @@ build/robot_glue.o: robot_glue.c \
  /user/5/.base/raymond/home/mdl2lus2osek/gnu-arm/4.4.2.nxt.x86_64.2013/bin/../lib/gcc/arm-elf/4.4.2/../../../../arm-elf/sys-include/sys/lock.h \
  /user/5/.base/raymond/home/mdl2lus2osek/gnu-arm/4.4.2.nxt.x86_64.2013/bin/../lib/gcc/arm-elf/4.4.2/include/stddef.h \
  /user/5/.base/raymond/home/mdl2lus2osek/gnu-arm/4.4.2.nxt.x86_64.2013/bin/../lib/gcc/arm-elf/4.4.2/../../../../arm-elf/sys-include/sys/string.h \
- Regulateur.h Regulateur_ext.h Planificateur.h
+ Regulateur.h Regulateur_ext.h Planificateur.h Planificateur_ext.h

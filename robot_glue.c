@@ -78,7 +78,7 @@ de variables partagées, de fonctions
 accessoires etc.
 ------------------------------*/
 
-int soeuil_obstacle = 15;
+int soeuil_obstacle = 20;
 _boolean etat; // Communication entre Planificateur et Regulateur
 
 #define CG_PORT NXT_PORT_S4
